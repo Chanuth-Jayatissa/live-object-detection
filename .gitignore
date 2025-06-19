@@ -1,0 +1,17 @@
+# Python virtual environment
+yolov8-env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VSCode settings (optional)
+.vscode/
+
+# OS metadata files
+.DS_Store
+Thumbs.db
+
+# Logs or outputs (optional)
+*.log
