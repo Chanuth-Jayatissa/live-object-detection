@@ -7,6 +7,16 @@ model = YOLO("yolov8n.pt")  # n = nano (fast), use yolov8s.pt for slightly bette
 # Start webcam (0 = default laptop camera)
 cap = cv2.VideoCapture(0)
 
+# Uncomment and change the below two lines to set a specific camera resolution (if not it sets to 640x480 by default)
+# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+# Print camera resolution
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+print(f"Camera resolution: {width} x {height}")
+
+
 while True:
     ret, frame = cap.read()
     if not ret:
