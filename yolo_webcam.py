@@ -8,8 +8,8 @@ model = YOLO("yolov8n.pt")  # n = nano (fast), use yolov8s.pt for slightly bette
 cap = cv2.VideoCapture(0)
 
 # Uncomment and change the below two lines to set a specific camera resolution (if not it sets to 640x480 by default)
-# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 
 # Print camera resolution
 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -21,6 +21,14 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
+    
+    # Flip camera
+    frame = cv2.flip(frame, 1)
+    
+    # crop camera horizontally to make it look like normal camera app
+    h, w, _ = frame.shape
+    crop_x = int(w * 0.1)  # Crop 10% from the left
+    frame = frame[:, crop_x:-crop_x]  # Crop the frame
 
     # Run object detection
     results = model.predict(source=frame, conf=0.4, verbose=False)
