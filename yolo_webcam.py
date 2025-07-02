@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 
 # Load YOLOv8 model pretrained on COCO (80 classes)
-model = YOLO("yolov8n.pt")  # n = nano (fast), use yolov8s.pt for slightly better accuracy
+model = YOLO("yolov8s.pt")   # s = small (better accuracy than nano)
 
 # Start webcam (0 = default laptop camera)
 cap = cv2.VideoCapture(0)
@@ -24,7 +24,7 @@ while True:
     
     # Flip camera
     frame = cv2.flip(frame, 1)
-    
+
     # crop camera horizontally to make it look like normal camera app
     h, w, _ = frame.shape
     crop_x = int(w * 0.1)  # Crop 10% from the left
