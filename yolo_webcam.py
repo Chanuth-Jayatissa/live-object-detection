@@ -16,6 +16,7 @@ width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 print(f"Camera resolution: {width} x {height}")
 
+frame_count = 0
 
 while True:
     ret, frame = cap.read()
@@ -28,13 +29,17 @@ while True:
     # crop camera horizontally to make it look like normal camera app
     h, w, _ = frame.shape
     crop_x = int(w * 0.1)  # Crop 10% from the left
-    frame = frame[:, crop_x:-crop_x]  # Crop the frame
+    frame_cropped = frame[:, crop_x:-crop_x]
 
-    # Run object detection
-    results = model.predict(source=frame, conf=0.4, verbose=False)
+    frame_count += 1
 
-    # Plot detection results on the frame
-    annotated_frame = results[0].plot()
+    if frame_count % 30 == 0:
+        # Only run detection every 3 frames
+        results = model.predict(source=frame_cropped, conf=0.4, verbose=False)
+        annotated_frame = results[0].plot()
+    else:
+        # Just show the raw frame
+        annotated_frame = frame_cropped
 
     # Show in window
     cv2.imshow("YOLOv8 Webcam Detection", annotated_frame)
